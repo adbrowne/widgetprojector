@@ -20,19 +20,15 @@ provider:
   region: ap-southeast-2
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+      Resource: "arn:aws:s3:::widgetprojection/*"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:PutItem"
+      Resource: "arn:aws:dynamodb:ap-southeast-2:662430452979:table/Widgets"
 
 # you can add packaging information here
 #package:
@@ -45,6 +41,7 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    memorySize: 128
 
 #    you can add any of the following events
 #    events:
